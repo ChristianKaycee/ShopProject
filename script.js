@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+    //sidenav
+    let menu = document.querySelector(".toggle");
+        let nav = document.querySelector("ul");
+        let before = document.querySelector("nav");
+        menu.addEventListener("change", () => {
+            nav.classList.toggle("show");
+            before.classList.toggle("show");
+        });
+    //cart
     const cart_icon = document.querySelector(".cart-icon");
     const cart = document.querySelector(".cart");
     const cart_empty = document.querySelector(".cart-empty");
@@ -6,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cart_list = document.querySelector(".cart-list");
     const cart_Item_num = document.querySelector(".current-num");
 
-    cart_icon.addEventListener("click", () => {
+    cart_icon.addEventListener("click", (e) => {
+        e.preventDefault();
         cart.classList.toggle("show");
     });
 
@@ -16,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentIndex = 0;
 
         thumbs.forEach((thumb, idx) => {
-            thumb.addEventListener("click", () => {
+            thumb.addEventListener("click", (e) => {
+                e.preventDefault();
                 removeCurrent();
                 currentIndex = idx;
                 updateMainImage();
@@ -33,14 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
             main_img.src = `./img/image-product-${num}.jpg`;
         }
 
-        item.querySelector(".next").addEventListener("click", () => {
+        item.querySelector(".next").addEventListener("click", (e) => {
+            e.preventDefault();
             removeCurrent();
             currentIndex = (currentIndex + 1) % thumbs.length;
             updateMainImage();
             thumbs[currentIndex].classList.add("current");
         });
 
-        item.querySelector(".previous").addEventListener("click", () => {
+        item.querySelector(".previous").addEventListener("click", (e) => {
+            e.preventDefault();
             removeCurrent();
             currentIndex = (currentIndex - 1 + thumbs.length) % thumbs.length;
             updateMainImage();
@@ -54,19 +67,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const addToCart = item.querySelector(".addCart");
         const price = item.querySelector(".price");
         const prod_name = item.querySelector(".name");
-        removeBtn.addEventListener("click", () => {
+        removeBtn.addEventListener("click", (e) => {
+            e.preventDefault();
             if (num > 0) {
                 num -= 1;
                 count.innerHTML = num;
             }
         });
 
-        addBtn.addEventListener("click", () => {
+        addBtn.addEventListener("click", (e) => {
+            e.preventDefault();
             num += 1;
             count.innerHTML = num;
         });
         let itemnum = 0;
-        addToCart.addEventListener("click", () => {
+        addToCart.addEventListener("click", (e) => {
+            e.preventDefault();
             if (num > 0) {
                 cart_empty.classList.add("hide");
                 let existingItem = Array.from(cart_list.children).find(cartItem => {
@@ -126,7 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     cart_list.appendChild(cart_item);
 
-                    del.addEventListener("click", () => {
+                    del.addEventListener("click", (e) => {
+                        e.preventDefault();
                         let itemQuantity = parseInt(cart_item.querySelector(".curr").innerHTML);
                         itemnum -= itemQuantity;
                         cart_Item_num.innerHTML = itemnum;
