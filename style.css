@@ -3,9 +3,8 @@
     padding: 0;
     margin: 0;
 }
-
 :root {
-    --Orange: hsl(26, 100%, 55%);
+    --Orange: hsl(26, 100%, 48%);
     --Paleorange: hsl(25, 100%, 94%);
     --Verydarkblue: hsl(220, 13%, 13%);
     --Darkgrayishblue: hsl(219, 9%, 45%);
@@ -36,7 +35,12 @@ body {
 }
 
 header {
-    position: relative;
+    position: fixed;
+    z-index: 10000;
+    background-color: var(--White);
+    top: 0;
+    width: 80%;
+    margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -53,8 +57,11 @@ header .icon {
 .left {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
-
+.wrapper{
+    display: none;
+}
 .head {
     font-weight: bold;
     text-transform: uppercase;
@@ -200,7 +207,7 @@ header .icon {
     display: flex;
     flex-direction: column;
     margin: 100px 0px;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .product-item {
@@ -281,6 +288,7 @@ header .icon {
 
 .product-carousel img.current {
     position: relative;
+    border: 2px solid red;
     opacity: .7;
 }
 
@@ -302,6 +310,7 @@ header .icon {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: 100%;
 }
 
 .company {
@@ -400,6 +409,7 @@ header .icon {
 .addCart {
     cursor: pointer;
     text-align: center;
+    justify-content: center;
     background-color: var(--Orange);
     border-radius: 10px;
     border: none;
@@ -409,6 +419,7 @@ header .icon {
     align-items: center;
     gap: 10px;
     transition: .3s;
+    color: black;
 }
 
 .addCart:hover {
@@ -422,6 +433,7 @@ header .icon {
 
 .add-txt {
     font-weight: bold;
+    color: black;
 }
 
 .hide {
@@ -431,14 +443,21 @@ header .icon {
 .block {
     display: block;
 }
-
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70px;
+    margin-top: 20px;
+    background-color: var(--Paleorange);
+    font-family: 'Courier New', Courier, monospace;
+}
+footer a{
+    color: var(--Verydarkblue);
+    font-weight: bold;
+}
 @media (max-width:750px) {
     /* products */
-    .product-container {
-        margin-top: 10px;
-        gap: 1rem;
-    }
-
     .product-item {
         display: grid;
         grid-template-columns: 1fr;
@@ -464,11 +483,117 @@ header .icon {
 
     .addCart {
         width: 100%;
-        justify-content: center;
     }
 }
 
 @media (max-width:600px) {
+    .wrapper{
+        display: block;
+    }
+    .menu-container{
+        position: relative;
+        display: flex;
+        top: 0;
+        left: 0;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        z-index: 1000;
+    }
+    .menu-container .toggle{
+        cursor: pointer;
+        position: relative;
+        left: 28px;
+        height: 25px;
+        width: 25px;
+        z-index: 100;
+        opacity: 0;
+    }
+    .menu-container .menu > div{
+        position: relative;
+        background-color: black;
+        width: 30px;
+        height: 2px;
+        z-index: 10;
+        transition: .4s;
+    }
+    .menu-container .menu > div::before,.menu-container .menu > div::after{
+        content: "";
+        position: absolute;
+        background-color: black;
+        width: 30px;
+        height: 1.8px;
+        top: -10px;
+    }
+    .menu-container .menu > div::after{
+        top:10px;
+    }
+    .menu-container .toggle:checked + .menu > div{
+        transform: rotate(230deg);
+        background-color: var(--Orange);
+        transition: .4s;
+    }
+    .menu-container .toggle:checked + .menu > div::before{
+        top: 0;
+        transform: rotate(90deg);
+        background-color: var(--Orange);
+        transition: .4s;
+    }
+    .menu-container .toggle:checked + .menu > div::after{
+        top: 0px;
+        transform: rotate(90deg);
+        background-color: var(--Orange);
+        transition: .4s;
+    }
+    .menu-container .toggle:checked:hover + .menu > div{
+        transform: rotate(90deg);
+        background-color: white;
+    }
+    .menu-container .toggle:checked:hover + .menu > div::before,.menu-container .toggle:checked:hover + .menu > div::after{
+        transform: rotate(90deg);
+        background-color: white;
+    }
+    nav{
+        position: fixed;
+        top:0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--Grayishblue);
+        z-index: 200;
+        border-radius: 26% 32% 10% 10% / 26% 32% 10% 10%;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        transform:scale(0);
+        transition: .4s;
+    }
+    nav ul{
+        display: flex;
+        list-style: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        transform:scale(0);
+        transition: transform .3s;
+    }
+    nav ul li{
+        width: 50%;
+        font-size: 2em;
+        text-align: center;
+        font-family:Georgia, 'Times New Roman', Times, serif;
+        color: white;
+        background-color: var(--Orange);
+        border-radius: 10px;
+        padding: 10px;
+        cursor: pointer;
+    }
+    .show{
+        transform:scale(1);
+    }
     .list{
         display: none;
     }
